@@ -13,7 +13,7 @@ class GranjaController extends Controller
      */
     public function index()
     {
-        //
+        return view('granjas.listar');
     }
 
     /**
@@ -23,7 +23,7 @@ class GranjaController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        return view('granjas.criar');
     }
 
     /**
@@ -45,7 +45,7 @@ class GranjaController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('granjas.mostrar');
     }
 
     /**
@@ -56,7 +56,7 @@ class GranjaController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('granjas.editar');
     }
 
     /**
