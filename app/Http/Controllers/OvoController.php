@@ -13,7 +13,7 @@ class OvoController extends Controller
      */
     public function index()
     {
-        //
+        return view('ovos.listar');
     }
 
     /**
@@ -23,7 +23,7 @@ class OvoController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        return view('ovos.criar');
     }
 
     /**
@@ -45,7 +45,7 @@ class OvoController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('ovos.mostrar');
     }
 
     /**
@@ -56,7 +56,7 @@ class OvoController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('ovos.editar');
     }
 
     /**

@@ -13,7 +13,7 @@ class SetorController extends Controller
      */
     public function index()
     {
-        //
+        return view('setores.listar');
     }
 
     /**
@@ -23,7 +23,7 @@ class SetorController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        return view('setores.criar');
     }
 
     /**
@@ -45,7 +45,7 @@ class SetorController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('setores.mostrar');
     }
 
     /**
@@ -56,7 +56,7 @@ class SetorController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('setores.edtiar');
     }
 
     /**

@@ -49,11 +49,11 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item"><a class="nav-link" href="#">Usuário</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Granja</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Setor</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Ovos</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Consultas</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('opcoes.usuario') }}">Usuário</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('opcoes.granja') }}">Granja</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('opcoes.setor') }}">Setor</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('opcoes.ovo') }}">Ovos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('mostrar.consulta') }}">Consultas</a></li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
