@@ -9,6 +9,11 @@ class TipoDeCriacao extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'tipo',
+        'id_granja',
+    ];
+
     // Associacoes
 
     public function granja(){

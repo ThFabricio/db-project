@@ -9,6 +9,12 @@ class Granja extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+
+        'id_proprietario',
+        'nome',
+        'cnpj'
+    ];
 
     // Associacoes
 

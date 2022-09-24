@@ -9,6 +9,14 @@ class Funcionario extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+
+        'id_usuario',
+        'id_granja',
+        'salario',
+        'regime_de_contrato'
+    ];
+
     // Associacoes
 
     public function user(){

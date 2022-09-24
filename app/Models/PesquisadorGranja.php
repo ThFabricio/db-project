@@ -9,6 +9,11 @@ class PesquisadorGranja extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id_pesquisador',
+        'id_granja',
+    ];
+
     // Associacoes
 
     public function pesquisador(){

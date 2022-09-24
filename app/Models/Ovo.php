@@ -9,6 +9,12 @@ class Ovo extends Model
 {
     use HasFactory;
 
+
+    protected $fillable = [
+        'peso',
+        'id_historico',
+    ];
+
     // Associacoes
 
     public function albumen(){

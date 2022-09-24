@@ -9,6 +9,14 @@ class Historico extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+
+        'id_setor',
+        'idade_das_aves'
+
+    ];
+
+
     // Associacoes
 
     public function setor(){
