@@ -72,12 +72,12 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="senha" class="col-md-4 col-form-label text-md-end"> Senha</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end"> Senha</label>
 
                             <div class="col-md-6">
-                                <input id="senha" type="password" class="form-control @error('senha') is-invalid @enderror" name="senha" required autocomplete="senha">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="password">
 
-                                @error('senha')
+                                @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
