@@ -14,4 +14,14 @@ class Proprietario extends Model
         'codigo_licenca',
         'id_usuario',
     ];
+
+    // Associacoes
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function granja(){
+        return $this->belongsTo(Granja::class);
+    }
 }

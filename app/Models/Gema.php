@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Gema extends Model
 {
     use HasFactory;
+
+
+    // Associacoes
+
+    public function ovo(){
+        return $this->belongsTo(Ovo::class);
+    }
 }
