@@ -47,14 +47,14 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'cpf' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
             'perfil' => ['required', 'string', Rule::in(['Proprietário', 'Funcionário', 'Pesquisador'])],
-            'senha' => ['required']
+            'password' => ['required']
         ]);
 
         $user = User::create([
             'nome' => $request->nome,
             'email' => $request->email,
             'cpf' => $request->cpf,
-            'senha' => Hash::make($request->senha),
+            'password' => Hash::make($request->password),
         ]);
 
         if ($request->perfil == 'Proprietário') {

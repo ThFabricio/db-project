@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class GranjaController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,28 +13,7 @@ class GranjaController extends Controller
      */
     public function index()
     {
-        return view('granjas.listar');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        return view('granjas.criar');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('usuarios.listar');
     }
 
     /**
@@ -45,7 +24,7 @@ class GranjaController extends Controller
      */
     public function show($id)
     {
-        return view('granjas.mostrar');
+        return view('usuarios.mostrar');
     }
 
     /**
@@ -56,7 +35,7 @@ class GranjaController extends Controller
      */
     public function edit($id)
     {
-        return view('granjas.editar');
+        return view('usuarios.editar');
     }
 
     /**
