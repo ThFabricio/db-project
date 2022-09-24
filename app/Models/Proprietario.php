@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Proprietario extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'email_comercial',
+        'codigo_licenca',
+        'id_usuario',
+    ];
 }
