@@ -9,6 +9,13 @@ class Pesquisador extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+
+        'id_usuario',
+        'universidade',
+        'id_pesquisador_supervisor'
+    ];
+
     // Associacoes
 
     public function user(){

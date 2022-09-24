@@ -9,6 +9,14 @@ class Setor extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'numero',
+        'linhagem',
+        'quantidade_de_aves',
+        'nutricao',
+        'id_granja',
+    ];
+
     // Associacoes
 
     public function granja(){

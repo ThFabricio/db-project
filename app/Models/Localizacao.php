@@ -9,6 +9,11 @@ class Localizacao extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'endereco',
+        'id_granja',
+    ];
+
     // Associacoes
 
     public function granja(){
