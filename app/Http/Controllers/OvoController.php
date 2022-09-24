@@ -45,10 +45,10 @@ class OvoController extends Controller
 
         $request->validate([
             //ovo
-            'peso'=>['required','double'],
-            'id_historico'=>['required','int'],
+            'peso'=>[],
+            'id_historico'=>[],
             //albumen
-            'pesoAlbumen'=>['required', 'double'],
+            'pesoAlbumen'=>[],
             'alturaAlbumen'=>[],
             'diametroAlbumen'=>[],
             'unidade_haugh'=>[],
