@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Granja;
+use App\Models\Proprietario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GranjaController extends Controller
 {
@@ -13,7 +16,8 @@ class GranjaController extends Controller
      */
     public function index()
     {
-        return view('granjas.listar');
+        $granjas = Granja::all();
+        return view('granjas.listar', ['granjas' => $granjas]);
     }
 
     /**
@@ -23,7 +27,10 @@ class GranjaController extends Controller
      */
     public function create(Request $request)
     {
-        return view('granjas.criar');
+        $proprietarios = Proprietario::all();
+
+
+        return view('granjas.criar', ['proprietarios' => $proprietarios]);
     }
 
     /**
@@ -34,7 +41,23 @@ class GranjaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $user = Auth::user();
+
+        $request->validate = [
+            'nome' => ['required', 'string', 'max:255'],
+            'cnpj' => ['required', 'string', 'max:14', 'min:14', 'unique:granjas'],
+        ];
+
+        $granja = Granja::create([
+            'id_proprietario' => $user->id,
+            'nome' => $request->nome,
+            'cnpj' => $request->cnpj
+        ]);
+
+        $granja->save();
+
+        return redirect()->route('listar.granja');
     }
 
     /**
@@ -45,7 +68,8 @@ class GranjaController extends Controller
      */
     public function show($id)
     {
-        return view('granjas.mostrar');
+        $granja = Granja::find($id);
+        return view('granjas.mostrar', ['granja' => $granja]);
     }
 
     /**
@@ -56,7 +80,9 @@ class GranjaController extends Controller
      */
     public function edit($id)
     {
-        return view('granjas.editar');
+        $granja = Granja::find($id);
+        $proprietarios = Proprietario::all();
+        return view('granjas.editar', ['granja' => $granja], ['proprietarios' => $proprietarios]);
     }
 
     /**
@@ -68,7 +94,20 @@ class GranjaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $granja = Granja::find($id);
+
+        $request->validate = [
+            'nome' => ['required', 'string', 'max:255'],
+            'cnpj' => ['required', 'string', 'max:14', 'min:14', 'unique:granjas'],
+        ];
+
+        $granja->nome = $request->nome;
+        $granja->cnpj = $request->cnpj;
+        $granja->id_proprietario = $request->id_proprietario;
+
+        $granja->save();
+
+        return redirect()->route('listar.granja');
     }
 
     /**
@@ -79,6 +118,9 @@ class GranjaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $granja = Granja::find($id);
+        $granja->delete();
+
+        return redirect()->route('listar.granja');
     }
 }

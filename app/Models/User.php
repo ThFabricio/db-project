@@ -32,4 +32,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    // Associacoes
+
+    public function proprietario(){
+        return $this->hasOne(Proprietario::class);
+    }
+
+    public function funcionario(){
+        return $this->hasOne(Funcionario::class);
+    }
+
+    public function pesquisador(){
+        return $this->hasOne(Pesquisador::class);
+    }
 }
