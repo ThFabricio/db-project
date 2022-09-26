@@ -54,7 +54,7 @@ Route::prefix('/setores')->group(function () {
     Route::post('/criar', [SetorController::class, 'store'])->name('criar.setor');
     Route::get('/editar/{id}', [SetorController::class, 'edit'])->name('form.editar.setor');
     Route::put('/editar/{id}', [SetorController::class, 'update'])->name('editar.setor');
-    Route::delete('deletar/{id}', [SetorController::class, 'destroy'])->name('deletar.setor');
+    Route::delete('/deletar/{id}', [SetorController::class, 'destroy'])->name('deletar.setor');
 });
 
 Route::prefix('/ovos')->group(function () {

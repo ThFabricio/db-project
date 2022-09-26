@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Granja;
+use App\Models\Setor;
 use Illuminate\Http\Request;
 
 class SetorController extends Controller
@@ -13,7 +15,8 @@ class SetorController extends Controller
      */
     public function index()
     {
-        return view('setores.listar');
+        $setores = Setor::all();
+        return view('setores.listar', ['setores' => $setores]);
     }
 
     /**
@@ -24,8 +27,8 @@ class SetorController extends Controller
     public function create(Request $request)
     {
 
-
-        return view('setores.criar');
+        $granjas = Granja::all();
+        return view('setores.criar', ['granjas' => $granjas]);
     }
 
     /**
@@ -34,9 +37,26 @@ class SetorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+
+        $request->validate([
+            'numero' => 'required',
+            'linhagem' => 'required',
+            'quantidade_de_aves' => 'required',
+            'nutricao' => 'required',
+            'id_granja' => 'required',
+        ]);
+
+        $setor = Setor::create([
+            'numero' => $request->numero,
+            'linhagem' => $request->linhagem,
+            'quantidade_de_aves' => $request->quantidade_de_aves,
+            'nutricao' => $request->nutricao,
+            'id_granja' => $request->id_granja,
+        ]);
+
+        $setor->save();
+        return redirect('listar.setor')->with('success', 'Setor salvo com sucesso!');
     }
 
     /**
@@ -47,7 +67,8 @@ class SetorController extends Controller
      */
     public function show($id)
     {
-        return view('setores.mostrar');
+        $setor = Setor::find($id);
+        return view('setores.mostrar', ['setor' => $setor]);
     }
 
     /**
@@ -58,7 +79,9 @@ class SetorController extends Controller
      */
     public function edit($id)
     {
-        return view('setores.edtiar');
+        $setor = Setor::find($id);
+        $granjas = Granja::all();
+        return view('setores.editar', ['setor' => $setor, 'granjas' => $granjas]);
     }
 
     /**
@@ -70,7 +93,23 @@ class SetorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'numero' => 'required',
+            'linhagem' => 'required',
+            'quantidade_de_aves' => 'required',
+            'nutricao' => 'required',
+            'id_granja' => 'required',
+        ]);
+
+        $setor = Setor::find($id);
+        $setor->numero = $request->get('numero');
+        $setor->linhagem = $request->get('linhagem');
+        $setor->quantidade_de_aves = $request->get('quantidade_de_aves');
+        $setor->nutricao = $request->get('nutricao');
+        $setor->id_granja = $request->get('id_granja');
+        $setor->save();
+
+        return redirect()->route('listar.setor');
     }
 
     /**
@@ -81,6 +120,9 @@ class SetorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $setor = Setor::find($id);
+        $setor->delete();
+
+        return redirect('listar.setores')->with('success', 'Setor deletado com sucesso!');
     }
 }
