@@ -13,11 +13,12 @@ class OvoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        return view('ovos.listar');
+        $ovos = Ovo::all();
+        return view('ovos.listar', ['ovos' => $ovos]);
     }
 
     /**
@@ -118,7 +119,8 @@ class OvoController extends Controller
      */
     public function show($id)
     {
-        return view('ovos.mostrar');
+        $ovo = Ovo::find($id);
+        return view('ovos.mostrar', ['ovo'=>$ovo]);
     }
 
     /**
