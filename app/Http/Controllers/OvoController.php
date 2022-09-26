@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Albumen;
 use App\Models\Casca;
 use App\Models\Gema;
+use App\Models\Historico;
 use App\Models\Ovo;
+use App\Models\Setor;
 use Illuminate\Http\Request;
 
 class OvoController extends Controller
@@ -24,11 +26,12 @@ class OvoController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create(Request $request)
     {
-        return view('ovos.criar');
+        $setores = Setor::all();
+        return view('ovos.criar', ['setores' => $setores]);
     }
 
     /**
@@ -47,7 +50,8 @@ class OvoController extends Controller
         $request->validate([
             //ovo
             'peso'=>[],
-            'id_historico'=>[],
+            'idade_das_aves' => [],
+            'id_setor' => [],
             //albumen
             'pesoAlbumen'=>[],
             'alturaAlbumen'=>[],
@@ -69,8 +73,18 @@ class OvoController extends Controller
             'corGema'=>[],
         ]);
 
+        $historico = Historico::where('idade_das_aves', $request->idade_das_aves)
+            ->where('id_setor', $request->id_setor)->fisrt();
+
+        if (is_null($historico)) {
+            $historico = new Historico();
+        }
+
+        $historico->idade_das_aves = $request->idade_das_aves;
+        $historico->id_setor = $request->id_setor;
+
         $ovo->peso = $request->peso;
-        $ovo->id_historico = $request->id_historico;
+        $ovo->id_historico = $historico->id;
 
         $ovo->save();
 
@@ -150,10 +164,13 @@ class OvoController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
-        //
+        $ovo = Ovo::find($id);
+        $ovo->delete();
+
+        return redirect('listar.ovo');
     }
 }
