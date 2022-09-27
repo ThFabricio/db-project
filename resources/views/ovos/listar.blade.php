@@ -13,6 +13,8 @@
                     <th scope="col"  class="titleColumn text-center"
                         style="cursor:pointer">Idade das Aves</th>
                     <th scope="col"  class="titleColumn text-center"
+                        style="cursor:pointer">Número do Setor</th>
+                    <th scope="col"  class="titleColumn text-center"
                         style="cursor:pointer">Visualizar</th>
                     <th scope="col"  class="titleColumn text-center"
                         style="cursor:pointer">Editar</th>
@@ -25,7 +27,8 @@
                     <tr>
                         <th scope="row">{{ $ovo->id }}</th>
                         <td class="text-center">{{ $ovo->peso }}</td>
-                        <!--<td class="text-center">{{ $granja->cnpj }}</td>-->
+                        <td class="text-center">{{ Historico::find($ovo->id_historico)->nome }}</td>
+                        <td class="text-center">{{ Setor::find(Historico::find($ovo->id_historico)->id_setor)->numero }}</td>
                         <td class="text-center"><a href="{{ route('mostrar.ovo', $ovo->id) }}" class="btn btn-primary">Visualizar</a></td>
                         <td class="text-center"><a href="{{ route('form.editar.ovo', $ovo->id) }}" class="btn btn-primary">Editar</a></td>
                         <td class="text-center">

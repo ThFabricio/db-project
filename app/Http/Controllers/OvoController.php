@@ -134,7 +134,12 @@ class OvoController extends Controller
     public function show($id)
     {
         $ovo = Ovo::find($id);
-        return view('ovos.mostrar', ['ovo'=>$ovo]);
+        $historico = Historico::find($ovo->id_historico);
+        $setores = Setor::all();
+        $albumen = Albumen::where('id_ovo', $ovo->id)->first();
+        $casca = Casca::where('id_ovo', $ovo->id)->first();
+        $gema = Gema::where('id_ovo', $ovo->id)->first();
+        return view('ovos.mostrar', ['ovo'=>$ovo, 'setores'=>$setores, 'historico'=>$historico, 'albumen'=>$albumen, 'casca'=>$casca, 'gema'=>$gema]);
     }
 
     /**
@@ -145,7 +150,13 @@ class OvoController extends Controller
      */
     public function edit($id)
     {
-        return view('ovos.editar');
+        $ovo = Ovo::find($id);
+        $historico = Historico::find($ovo->id_historico);
+        $setores = Setor::all();
+        $albumen = Albumen::where('id_ovo', $ovo->id)->first();
+        $casca = Casca::where('id_ovo', $ovo->id)->first();
+        $gema = Gema::where('id_ovo', $ovo->id)->first();
+        return view('ovos.editar', ['ovo'=>$ovo, 'setores'=>$setores, 'historico'=>$historico, 'albumen'=>$albumen, 'casca'=>$casca, 'gema'=>$gema]);
     }
 
     /**
@@ -153,11 +164,91 @@ class OvoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function update(Request $request, $id)
     {
-        //
+        $ovo = Ovo::find($id);
+        $albumen = Albumen::where('id_ovo', $ovo->id)->first();
+        $casca = Casca::where('id_ovo', $ovo->id)->first();
+        $gema = Gema::where('id_ovo', $ovo->id)->first();
+
+        $request->validate([
+            //ovo
+            'peso'=>[],
+            'idade_das_aves' => [],
+            'id_setor' => [],
+            //albumen
+            'pesoAlbumen'=>[],
+            'alturaAlbumen'=>[],
+            'diametroAlbumen'=>[],
+            'unidade_haugh'=>[],
+            'phAlbumen'=>[],
+            //casca
+            'pesoCasca'=>[],
+            'corCasca'=>[],
+            'espessura1'=>[],
+            'espessura2'=>[],
+            'espessura3'=>[],
+            //gema
+            'pesoGema'=>[],
+            'alturaGema'=>[],
+            'diametroGema'=>[],
+            'indiceGema'=>[],
+            'phGema'=>[],
+            'corGema'=>[],
+        ]);
+
+        $historico = Historico::where('idade_das_aves', $request->idade_das_aves)
+            ->where('id_setor', $request->id_setor)->fisrt();
+
+        if (is_null($historico)) {
+            $historico = new Historico();
+        }
+
+        $historico->idade_das_aves = $request->idade_das_aves;
+        $historico->id_setor = $request->id_setor;
+
+        $ovo->peso = $request->peso;
+        $ovo->id_historico = $historico->id;
+
+        $ovo->save();
+
+        //albumen
+
+        $albumen->id_ovo = $ovo->id;
+        $albumen->peso = $request->pesoAlbumen;
+        $albumen->altura = $request->alturaAlbumen;
+        $albumen->diametro = $request->diametroAlbumen;
+        $albumen->unidade_haugh = $request->unidade_haugh;
+        $albumen->ph = $request->phAlbumen;
+
+        $albumen->save();
+
+        //casca
+
+        $casca->id_ovo = $ovo->id;
+        $casca->peso = $request->pesoCasca;
+        $casca->cor = $request->corCasca;
+        $casca->espessura1 = $request->espessura1;
+        $casca->espessura2 = $request->espessura2;
+        $casca->espessura3 = $request->espessura3;
+
+        $casca->save();
+
+        //gema
+
+        $gema->id_ovo = $ovo->id;
+        $gema->peso = $request->pesoGema;
+        $gema->altura = $request->alturaGema;
+        $gema->diametro = $request->diametroGema;
+        $gema->indice = $request->indiceGema;
+        $gema->ph = $request->phGema;
+        $gema->cor = $request->corGema;
+
+        $gema->save();
+
+        return view ('listar.ovo');
     }
 
     /**
