@@ -38,7 +38,7 @@ class OvoController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -74,14 +74,14 @@ class OvoController extends Controller
         ]);
 
         $historico = Historico::where('idade_das_aves', $request->idade_das_aves)
-            ->where('id_setor', $request->id_setor)->fisrt();
+            ->where('id_setor', $request->id_setor)->first();
 
         if (is_null($historico)) {
-            $historico = new Historico();
+            $historico = Historico::create([
+                'idade_das_aves' => $request->idade_das_aves,
+                'id_setor' => $request->id_setor,
+            ]);
         }
-
-        $historico->idade_das_aves = $request->idade_das_aves;
-        $historico->id_setor = $request->id_setor;
 
         $ovo->peso = $request->peso;
         $ovo->id_historico = $historico->id;
@@ -122,7 +122,7 @@ class OvoController extends Controller
 
         $gema->save();
 
-        return view ('form.criar.ovo');
+        return redirect()->route('listar.ovo');
     }
 
     /**
@@ -135,7 +135,7 @@ class OvoController extends Controller
     {
         $ovo = Ovo::find($id);
         $historico = Historico::find($ovo->id_historico);
-        $setores = Setor::all();
+        $setores = Setor::find(); //pegar id do setor
         $albumen = Albumen::where('id_ovo', $ovo->id)->first();
         $casca = Casca::where('id_ovo', $ovo->id)->first();
         $gema = Gema::where('id_ovo', $ovo->id)->first();
@@ -200,7 +200,7 @@ class OvoController extends Controller
         ]);
 
         $historico = Historico::where('idade_das_aves', $request->idade_das_aves)
-            ->where('id_setor', $request->id_setor)->fisrt();
+            ->where('id_setor', $request->id_setor)->get();
 
         if (is_null($historico)) {
             $historico = new Historico();
