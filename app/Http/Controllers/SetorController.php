@@ -56,7 +56,7 @@ class SetorController extends Controller
         ]);
 
         $setor->save();
-        return redirect('listar.setor')->with('success', 'Setor salvo com sucesso!');
+        return redirect()->route('listar.setor')->with('success', 'Setor salvo com sucesso!');
     }
 
     /**

@@ -12,7 +12,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form method="POST" action="{{route ('ovos.mostrar')}}">
+                            <form method="GET" action="{{route ('mostrar.ovo',$ovo->id)}}">
                                 @csrf
 
                                 <div class="row mb-3">
