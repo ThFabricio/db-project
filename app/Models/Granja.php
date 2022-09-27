@@ -31,16 +31,16 @@ class Granja extends Model
         return $this->hasMany(Setor::class);
     }
 
-    public function pesquisadorGranja(){
-        return $this->hasMany(PesquisadorGranja::class);
+    public function pesquisadores(){
+        return $this->belongsToMany(Pesquisador::class, 'pesquisador_granjas', 'id_granja', 'id_pesquisador');
     }
 
     public function localizacao(){
-        return $this->hasMany(Localizacao::class);
+        return $this->hasMany(Localizacao::class, 'id_granja');
     }
 
-    public function tipoCriacaoe(){
-        return $this->hasMany(TipoCriacaoe::class);
+    public function tipoCriacao(){
+        return $this->hasMany(TipoDeCriacao::class, 'id_granja');
     }
 
 

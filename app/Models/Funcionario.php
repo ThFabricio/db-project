@@ -14,7 +14,7 @@ class Funcionario extends Model
         'id_usuario',
         'id_granja',
         'salario',
-        'regime_de_contrato'
+        'regime_contratacao'
     ];
 
     // Associacoes

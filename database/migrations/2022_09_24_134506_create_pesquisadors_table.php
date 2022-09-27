@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('universidade');
             $table->unsignedBigInteger('id_pesquisador_supervisor')->nullable();
+            $table->unsignedBigInteger('id_usuario');
             $table->timestamps();
 
-            $table->foreign('id_pesquisador_supervisor')->references('id')->on('pesquisadors');
+            $table->foreign('id_pesquisador_supervisor')->references('id')->on('pesquisadors')->onDelete('set null');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

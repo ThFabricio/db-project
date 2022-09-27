@@ -36,14 +36,14 @@ class User extends Authenticatable
     // Associacoes
 
     public function proprietario(){
-        return $this->hasOne(Proprietario::class);
+        return $this->hasOne(Proprietario::class, 'id_usuario');
     }
 
     public function funcionario(){
-        return $this->hasOne(Funcionario::class);
+        return $this->hasOne(Funcionario::class, 'id_usuario');
     }
 
     public function pesquisador(){
-        return $this->hasOne(Pesquisador::class);
+        return $this->hasOne(Pesquisador::class, 'id_usuario');
     }
 }

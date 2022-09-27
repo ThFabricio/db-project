@@ -22,6 +22,6 @@ class Proprietario extends Model
     }
 
     public function granja(){
-        return $this->belongsTo(Granja::class);
+        return $this->hasMany(Granja::class);
     }
 }

@@ -30,6 +30,8 @@ Route::prefix('/usuarios')->group(function () {
     Route::view('/opcoes', 'usuarios.opcoes')->name('opcoes.usuario');
     Route::get('/listar', [UserController::class, 'index'])->name('listar.usuario');
     Route::get('/mostrar/{id}', [UserController::class, 'show'])->name('mostrar.usuario');
+    Route::get('/criar', [UserController::class, 'create'])->name('form.criar.usuario');
+    Route::post('/criar', [UserController::class, 'store'])->name('criar.usuario');
     Route::get('/editar/{id}', [UserController::class, 'edit'])->name('form.editar.usuario');
     Route::put('/editar/{id}', [UserController::class, 'update'])->name('editar.usuario');
     Route::delete('deletar/{id}', [UserController::class, 'destroy'])->name('deletar.usuario');

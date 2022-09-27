@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Granja;
+use App\Models\Localizacao;
 use App\Models\Proprietario;
+use App\Models\TipoDeCriacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,21 +43,36 @@ class GranjaController extends Controller
      */
     public function store(Request $request)
     {
-
-        $user = Auth::user();
-
         $request->validate = [
             'nome' => ['required', 'string', 'max:255'],
             'cnpj' => ['required', 'string', 'max:14', 'min:14', 'unique:granjas'],
+            'localizacoes' => ['required', 'string'],
+            'tipo_criacao' => ['required', 'string'],
         ];
 
         $granja = Granja::create([
-            'id_proprietario' => $user->id,
+            'id_proprietario' => $request->id_proprietario,
             'nome' => $request->nome,
             'cnpj' => $request->cnpj
         ]);
 
-        $granja->save();
+        foreach (explode(';', $request->localizacoes) as $localizacao) {
+            if (trim($localizacao) != '') {
+                Localizacao::create([
+                    'endereco' => $localizacao,
+                    'id_granja' => $granja->id
+                ]);
+            }
+        }
+
+        foreach (explode(';', $request->tipo_criacao) as $tipoCriacao) {
+            if (trim($tipoCriacao) != '') {
+                TipoDeCriacao::create([
+                    'tipo' => $tipoCriacao,
+                    'id_granja' => $granja->id
+                ]);
+            }
+        }
 
         return redirect()->route('listar.granja');
     }
