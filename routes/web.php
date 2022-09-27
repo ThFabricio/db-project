@@ -22,10 +22,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::prefix('/usuarios')->group(function () {
     Route::view('/opcoes', 'usuarios.opcoes')->name('opcoes.usuario');
     Route::get('/listar', [UserController::class, 'index'])->name('listar.usuario');
