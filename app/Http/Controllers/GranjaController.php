@@ -59,7 +59,7 @@ class GranjaController extends Controller
         foreach (explode(';', $request->localizacoes) as $localizacao) {
             if (trim($localizacao) != '') {
                 Localizacao::create([
-                    'endereco' => $localizacao,
+                    'endereco' => trim($localizacao),
                     'id_granja' => $granja->id
                 ]);
             }
@@ -68,7 +68,7 @@ class GranjaController extends Controller
         foreach (explode(';', $request->tipo_criacao) as $tipoCriacao) {
             if (trim($tipoCriacao) != '') {
                 TipoDeCriacao::create([
-                    'tipo' => $tipoCriacao,
+                    'tipo' => trim($tipoCriacao),
                     'id_granja' => $granja->id
                 ]);
             }

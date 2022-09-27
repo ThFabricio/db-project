@@ -18,18 +18,18 @@ class Ovo extends Model
     // Associacoes
 
     public function albumen(){
-        return $this->hasOne(Albumen::class);
+        return $this->hasOne(Albumen::class, 'id_ovo');
     }
 
     public function gema(){
-        return $this->hasOne(Gema::class);
+        return $this->hasOne(Gema::class, 'id_ovo');
     }
 
     public function casca(){
-        return $this->hasOne(Casca::class);
+        return $this->hasOne(Casca::class, 'id_ovo');
     }
 
     public function historico(){
-        return $this->belongsTo(Historico::class);
+        return $this->belongsTo(Historico::class, 'id_historico');
     }
 }

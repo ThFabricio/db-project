@@ -20,10 +20,10 @@ class Historico extends Model
     // Associacoes
 
     public function setor(){
-        return $this->belongsTo(Setor::class);
+        return $this->belongsTo(Setor::class, 'id_setor');
     }
 
     public function ovo(){
-        return $this->hasMany(Ovo::class);
+        return $this->hasMany(Ovo::class, 'id_ovo');
     }
 }
