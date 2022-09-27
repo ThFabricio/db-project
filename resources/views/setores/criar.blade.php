@@ -17,7 +17,7 @@
                             <div class="row mb-3">
                                 <label for="id_granja" class="col-md-4 col-form-label text-md-end">Granja</label>
                                 <div class="col-md-6">
-                                    <select class="form-select" @error('id_granja') is-invalid @enderror" name="id_granja" id="id_granja" required>
+                                    <select class="form-select @error('id_granja') is-invalid @enderror" name="id_granja" id="id_granja" required>
                                     <option value="" selected>Selecione</option>
                                     @foreach($granjas as $granja)
                                         <option value="{{ $granja->id }}">{{ $granja->nome }}</option>

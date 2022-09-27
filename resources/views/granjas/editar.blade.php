@@ -18,7 +18,7 @@
                             <div class="row mb-3">
                                 <label for="id_proprietario" class="col-md-4 col-form-label text-md-end">Proprietario</label>
                                 <div class="col-md-6">
-                                    <select class="form-select" @error('id_proprietario') is-invalid @enderror" name="id_proprietario" id="id_proprietario" required>
+                                    <select class="form-select @error('id_proprietario') is-invalid @enderror" name="id_proprietario" id="id_proprietario" required>
                                         <option value="{{$granja->id_proprietario}}">{{\App\Models\User::where('id', \App\Models\Proprietario::where('id', $granja->id_proprietario)->first()->id_usuario)->first()->nome }}</option>
                                         @foreach($proprietarios as $proprietario)
                                             @if($proprietario->id != $granja->id_proprietario)
