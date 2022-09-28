@@ -20,15 +20,15 @@ class Granja extends Model
 
 
     public function proprietario(){
-        return $this->belongsTo(Proprietario::class);
+        return $this->belongsTo(Proprietario::class, 'id_proprietario');
     }
 
     public function funcionario(){
-        return $this->hasMany(Funcionario::class);
+        return $this->hasMany(Funcionario::class, 'id_funcionario');
     }
 
     public function setor(){
-        return $this->hasMany(Setor::class);
+        return $this->hasMany(Setor::class, 'id_setor');
     }
 
     public function pesquisadores(){

@@ -25,7 +25,7 @@
                 @foreach($granjas as $granja)
                     <tr>
                         <th scope="row">{{ $granja->id }}</th>
-                        <td class="text-center">{{ \App\Models\User::where('id', \App\Models\Proprietario::where('id', $granja->id_proprietario)->first()->id_usuario)->first()->nome }}</td>
+                        <td class="text-center">@if($granja->proprietario != null && $granja->proprietario->user != null) {{$granja->proprietario->user->nome}} @endif</td>
                         <td class="text-center">{{ $granja->nome }}</td>
                         <td class="text-center">{{ $granja->cnpj }}</td>
                         <td class="text-center"><a href="{{ route('mostrar.granja', $granja->id) }}" class="btn btn-primary">Visualizar</a></td>

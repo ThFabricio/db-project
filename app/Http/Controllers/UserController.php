@@ -103,6 +103,12 @@ class UserController extends Controller
                 'universidade' => ['required', 'string', 'max:255'],
                 'formacoes' => ['required', 'string']
             ]);
+            foreach (explode(';', $request->cnpj_granja_pesquisador) as $cnpj) {
+                $granja = Granja::where('cnpj', trim($cnpj))->first();
+                if ($granja == null) {
+                    return redirect()->back()->withErrors(['cnpj_granja_pesquisador' => 'Granja inválida'])->withInput();
+                }
+            }
             try {
                 $supervisor = Pesquisador::find($request->id_pesquisador_supervisor);
                 $pesquisador = Pesquisador::create([
@@ -110,10 +116,18 @@ class UserController extends Controller
                     'id_pesquisador_supervisor' => ($supervisor == null) ? null : $supervisor->id,
                     'id_usuario' => $user->id
                 ]);
-                PesquisadorGranja::create([
-                    'id_granja' => Granja::findOrFail($request->id_granja_pesquisador)->id,
-                    'id_pesquisador' => $pesquisador->id
-                ]);
+                foreach (explode(';', $request->cnpj_granja_pesquisador) as $cnpj) {
+                    $granja = Granja::where('cnpj', trim($cnpj))->first();
+                    if ($granja == null) {
+                        return redirect()->back()->withErrors(['cnpj_granja_pesquisador' => 'Granja inválida'])->withInput();
+                    }
+                    if (trim($cnpj) != '') {
+                        PesquisadorGranja::create([
+                            'id_granja' => $granja->id,
+                            'id_pesquisador' => $pesquisador->id
+                        ]);
+                    }
+                }
                 foreach (explode(';', $request->formacoes) as $formacao) {
                     if (trim($formacao) != '') {
                         Formacao::create([
@@ -140,7 +154,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('usuarios.editar');
+        return view('usuarios.editar', [
+            'user' => User::find($id),
+            'granjas' => Granja::all(),
+            'pesquisadores' => Pesquisador::all()
+        ]);
     }
 
     /**
@@ -152,7 +170,76 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        
+        $request->validate([
+            'nome' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id, 'id')],
+            'cpf' => ['required', 'string', 'min:11', 'max:11', Rule::unique('users')->ignore($user->id, 'id')],
+        ]);
+
+        $user->nome = $request->nome;
+        $user->email = $request->email;
+        $user->cpf = $request->cpf;
+
+        if ($user->proprietario) {
+            $request->validate([
+                'email_comercial' => ['required', 'string', 'email', 'max:255', Rule::unique('proprietarios')->ignore($user->proprietario->id, 'id')],
+                'codigo_licenca' => ['required', 'string', Rule::unique('proprietarios')->ignore($user->proprietario->id, 'id')]
+            ]);
+            $user->proprietario->email_comercial = $request->email_comercial;
+            $user->proprietario->codigo_licenca = $request->codigo_licenca;
+            $user->proprietario->save();
+        } else if ($user->funcionario) {
+            $request->validate([
+                'regime_contratacao' => ['required', 'string', 'max:255'],
+                'salario' => ['required', 'numeric']
+            ]);
+            $user->funcionario->regime_contratacao = $request->regime_contratacao;
+            $user->funcionario->salario = $request->salario;
+            $user->funcionario->id_granja = $request->id_granja_funcionario;
+            $user->funcionario->save();
+        } else if ($user->pesquisador) {
+            $request->validate([
+                'universidade' => ['required', 'string', 'max:255'],
+                'formacoes' => ['required', 'string']
+            ]); 
+            foreach ($user->pesquisador->granjas as $granja) {
+                PesquisadorGranja::where('id_pesquisador', $user->pesquisador->id)->where('id_granja', $granja->id)->first()->delete();
+            }
+            foreach (explode(';', $request->cnpj_granja_pesquisador) as $cnpj) {
+                if (trim($cnpj) != '') {
+                    $granja = Granja::where('cnpj', trim($cnpj))->first();
+                    if ($granja == null) {
+                        return redirect()->back()->withErrors(['cnpj_granja_pesquisador' => 'Granja inválida'])->withInput();
+                    }
+                    PesquisadorGranja::create([
+                        'id_granja' => $granja->id,
+                        'id_pesquisador' => $user->pesquisador->id
+                    ]);
+                }
+            }
+
+            $user->pesquisador->universidade = $request->universidade;
+            $user->pesquisador->id_pesquisador_supervisor = $request->id_pesquisador_supervisor;
+            $user->pesquisador->save();
+
+            foreach ($user->pesquisador->formacoes as $formacao) {
+                $formacao->delete();
+            }
+            foreach (explode(';', $request->formacoes) as $formacao) {
+                if (trim($formacao) != '') {
+                    Formacao::create([
+                        'tipo' => trim($formacao),
+                        'id_pesquisador' => $user->pesquisador->id
+                    ]);
+                }
+            }
+        }
+
+        $user->save();
+
+        return redirect()->route('listar.usuario');
     }
 
     /**
@@ -164,19 +251,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        if ($user->proprietario) {
-            $user->proprietario->delete();
-            $user->delete();
-        } else if ($user->funcionario) {
-            $user->funcionario->delete();
-            $user->delete();
-        } else if ($user->pesquisador) {
-            foreach ($user->pesquisador->supervisados as $supervisados) {
-                $supervisados->id_pesquisador_supervisor = null;
-                $supervisados->save();
-            }
-            $user->pesquisador->delete();
-            $user->delete();
-        }
+        $user->delete();
+
+        return redirect()->route('listar.usuario');
     }
 }

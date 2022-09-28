@@ -18,10 +18,10 @@ class Proprietario extends Model
     // Associacoes
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 
     public function granja(){
-        return $this->hasMany(Granja::class);
+        return $this->hasMany(Granja::class, 'id_granja');
     }
 }

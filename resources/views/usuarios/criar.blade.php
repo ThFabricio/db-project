@@ -153,7 +153,7 @@
                             <div class="col-md-6">
                                 <select class="form-select" name="id_granja_funcionario" id="id_granja_funcionario" aria-label="Selecione uma granja">
                                     @foreach ($granjas as $granja)
-                                        <option @if(old('id_granja_funcionario') == $granja->id) selected @endif value={{ $granja->id }}>{{ $granja->nome }}</option>
+                                        <option @if(old('id_granja_funcionario') == $granja->id) selected @endif value={{ $granja->id }}>Nome: {{ $granja->nome }} - CNPJ: {{ $granja->cnpj }}</option>
                                     @endforeach
                                 </select>
 
@@ -197,16 +197,12 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="id_granja_pesquisador" class="col-md-4 col-form-label text-md-end">Granja</label>
+                            <label for="cnpj_granja_pesquisador" class="col-md-4 col-form-label text-md-end">Granja (digite o CNPJ separado por ;)</label>
 
                             <div class="col-md-6">
-                                <select class="form-select" name="id_granja_pesquisador" id="id_granja_pesquisador" aria-label="Selecione uma granja">
-                                    @foreach ($granjas as $granja)
-                                        <option @if(old('id_granja_pesquisador') == $granja->id) selected @endif value={{ $granja->id }}>{{ $granja->nome }}</option>
-                                    @endforeach
-                                </select>
+                                <input id="cnpj_granja_pesquisador" type="text" class="form-control @error('cnpj_granja_pesquisador') is-invalid @enderror" name="cnpj_granja_pesquisador" value="{{ old('cnpj_granja_pesquisador') }}" autocomplete="cnpj_granja_pesquisador">
 
-                                @error('id_granja_pesquisador')
+                                @error('cnpj_granja_pesquisador')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -219,6 +215,7 @@
 
                             <div class="col-md-6">
                                 <select class="form-select" name="id_pesquisador_supervisor" id="id_pesquisador_supervisor" aria-label="Selecione uma granja">
+                                    <option @if(old('id_pesquisador_supervisor') == null) selected @endif value="null">Sem pesquisador</option>
                                     @foreach ($pesquisadores as $pesquisador)
                                         <option @if(old('id_pesquisador_supervisor') == $pesquisador->id) selected @endif value={{ $pesquisador->id }}>{{ $pesquisador->user->nome }}</option>
                                     @endforeach
