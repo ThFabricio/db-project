@@ -14,12 +14,12 @@ class Funcionario extends Model
         'id_usuario',
         'id_granja',
         'salario',
-        'regime_de_contrato'
+        'regime_contratacao'
     ];
 
     // Associacoes
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 }

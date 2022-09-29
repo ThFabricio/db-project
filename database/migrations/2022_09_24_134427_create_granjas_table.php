@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('cnpj');
-            $table->unsignedBigInteger('id_proprietario');
+            $table->unsignedBigInteger('id_proprietario')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_proprietario')->references('id')->on('proprietarios');
+            $table->foreign('id_proprietario')->references('id')->on('proprietarios')->onDelete('set null');
         });
     }
 

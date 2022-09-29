@@ -49,28 +49,28 @@ class OvoController extends Controller
 
         $request->validate([
             //ovo
-            'peso'=>[],
-            'idade_das_aves' => [],
-            'id_setor' => [],
+            'peso'=>['required'],
+            'idade_das_aves' => ['required'],
+            'id_setor' => ['required'],
             //albumen
-            'pesoAlbumen'=>[],
-            'alturaAlbumen'=>[],
-            'diametroAlbumen'=>[],
-            'unidade_haugh'=>[],
-            'phAlbumen'=>[],
+            'pesoAlbumen'=>['required'],
+            'alturaAlbumen'=>['required'],
+            'diametroAlbumen'=>['required'],
+            'unidade_haugh'=>['required'],
+            'phAlbumen'=>['required'],
             //casca
-            'pesoCasca'=>[],
-            'corCasca'=>[],
-            'espessura1'=>[],
-            'espessura2'=>[],
-            'espessura3'=>[],
+            'pesoCasca'=>['required'],
+            'corCasca'=>['required'],
+            'espessura1'=>['required'],
+            'espessura2'=>['required'],
+            'espessura3'=>['required'],
             //gema
-            'pesoGema'=>[],
-            'alturaGema'=>[],
-            'diametroGema'=>[],
-            'indiceGema'=>[],
-            'phGema'=>[],
-            'corGema'=>[],
+            'pesoGema'=>['required'],
+            'alturaGema'=>['required'],
+            'diametroGema'=>['required'],
+            'indiceGema'=>['required'],
+            'phGema'=>['required'],
+            'corGema'=>['required'],
         ]);
 
         $historico = Historico::where('idade_das_aves', $request->idade_das_aves)
@@ -134,12 +134,8 @@ class OvoController extends Controller
     public function show($id)
     {
         $ovo = Ovo::find($id);
-        $historico = Historico::find($ovo->id_historico);
-        $setores = Setor::find(); //pegar id do setor
-        $albumen = Albumen::where('id_ovo', $ovo->id)->first();
-        $casca = Casca::where('id_ovo', $ovo->id)->first();
-        $gema = Gema::where('id_ovo', $ovo->id)->first();
-        return view('ovos.mostrar', ['ovo'=>$ovo, 'setores'=>$setores, 'historico'=>$historico, 'albumen'=>$albumen, 'casca'=>$casca, 'gema'=>$gema]);
+
+        return view('ovos.mostrar', ['ovo'=>$ovo]);
     }
 
     /**
@@ -151,12 +147,8 @@ class OvoController extends Controller
     public function edit($id)
     {
         $ovo = Ovo::find($id);
-        $historico = Historico::find($ovo->id_historico);
-        $setores = Setor::all();
-        $albumen = Albumen::where('id_ovo', $ovo->id)->first();
-        $casca = Casca::where('id_ovo', $ovo->id)->first();
-        $gema = Gema::where('id_ovo', $ovo->id)->first();
-        return view('ovos.editar', ['ovo'=>$ovo, 'setores'=>$setores, 'historico'=>$historico, 'albumen'=>$albumen, 'casca'=>$casca, 'gema'=>$gema]);
+
+        return view('ovos.editar', ['ovo'=>$ovo, 'setores' => Setor::all()]);
     }
 
     /**
@@ -169,41 +161,44 @@ class OvoController extends Controller
     public function update(Request $request, $id)
     {
         $ovo = Ovo::find($id);
-        $albumen = Albumen::where('id_ovo', $ovo->id)->first();
-        $casca = Casca::where('id_ovo', $ovo->id)->first();
-        $gema = Gema::where('id_ovo', $ovo->id)->first();
+        $albumen = $ovo->albumen;
+        $casca = $ovo->casca;
+        $gema = $ovo->gema;
 
         $request->validate([
             //ovo
-            'peso'=>[],
-            'idade_das_aves' => [],
-            'id_setor' => [],
+            'peso'=>['required'],
+            'idade_das_aves' => ['required'],
+            'id_setor' => ['required'],
             //albumen
-            'pesoAlbumen'=>[],
-            'alturaAlbumen'=>[],
-            'diametroAlbumen'=>[],
-            'unidade_haugh'=>[],
-            'phAlbumen'=>[],
+            'pesoAlbumen'=>['required'],
+            'alturaAlbumen'=>['required'],
+            'diametroAlbumen'=>['required'],
+            'unidade_haugh'=>['required'],
+            'phAlbumen'=>['required'],
             //casca
-            'pesoCasca'=>[],
-            'corCasca'=>[],
-            'espessura1'=>[],
-            'espessura2'=>[],
-            'espessura3'=>[],
+            'pesoCasca'=>['required'],
+            'corCasca'=>['required'],
+            'espessura1'=>['required'],
+            'espessura2'=>['required'],
+            'espessura3'=>['required'],
             //gema
-            'pesoGema'=>[],
-            'alturaGema'=>[],
-            'diametroGema'=>[],
-            'indiceGema'=>[],
-            'phGema'=>[],
-            'corGema'=>[],
+            'pesoGema'=>['required'],
+            'alturaGema'=>['required'],
+            'diametroGema'=>['required'],
+            'indiceGema'=>['required'],
+            'phGema'=>['required'],
+            'corGema'=>['required'],
         ]);
 
         $historico = Historico::where('idade_das_aves', $request->idade_das_aves)
-            ->where('id_setor', $request->id_setor)->get();
+            ->where('id_setor', $request->id_setor)->first();
 
         if (is_null($historico)) {
-            $historico = new Historico();
+            $historico = Historico::create([
+                'idade_das_aves' => $request->idade_das_aves,
+                'id_setor' => $request->id_setor,
+            ]);
         }
 
         $historico->idade_das_aves = $request->idade_das_aves;
@@ -248,7 +243,7 @@ class OvoController extends Controller
 
         $gema->save();
 
-        return view ('listar.ovo');
+        return redirect()->route('listar.ovo');
     }
 
     /**
@@ -262,6 +257,6 @@ class OvoController extends Controller
         $ovo = Ovo::find($id);
         $ovo->delete();
 
-        return redirect('listar.ovo');
+        return redirect()->route('listar.ovo');
     }
 }

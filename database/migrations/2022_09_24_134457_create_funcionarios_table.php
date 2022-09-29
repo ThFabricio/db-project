@@ -17,10 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('regime_contratacao');
             $table->decimal('salario');
-            $table->unsignedBigInteger('id_granja');
+            $table->unsignedBigInteger('id_granja')->nullable();
+            $table->unsignedBigInteger('id_usuario');
             $table->timestamps();
 
-            $table->foreign('id_granja')->references('id')->on('granjas');
+            $table->foreign('id_granja')->references('id')->on('granjas')->onDelete('set null');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

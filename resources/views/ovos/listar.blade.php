@@ -27,8 +27,8 @@
                     <tr>
                         <th scope="row">{{ $ovo->id }}</th>
                         <td class="text-center">{{ $ovo->peso }}</td>
-                        <td class="text-center">{{ $ovo->historico }}</td>
-                        <td class="text-center">{{ $ovo->historico }}</td>
+                        <td class="text-center">{{ $ovo->historico->idade_das_aves }}</td>
+                        <td class="text-center">{{ $ovo->historico->setor->numero }}</td>
                         <td class="text-center"><a href="{{ route('mostrar.ovo', $ovo->id) }}" class="btn btn-primary">Visualizar</a></td>
                         <td class="text-center"><a href="{{ route('form.editar.ovo', $ovo->id) }}" class="btn btn-primary">Editar</a></td>
                         <td class="text-center">

@@ -5,6 +5,7 @@ use App\Http\Controllers\GranjaController;
 use App\Http\Controllers\OvoController;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisaoBDController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,14 +23,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::prefix('/usuarios')->group(function () {
     Route::view('/opcoes', 'usuarios.opcoes')->name('opcoes.usuario');
     Route::get('/listar', [UserController::class, 'index'])->name('listar.usuario');
     Route::get('/mostrar/{id}', [UserController::class, 'show'])->name('mostrar.usuario');
+    Route::get('/criar', [UserController::class, 'create'])->name('form.criar.usuario');
+    Route::post('/criar', [UserController::class, 'store'])->name('criar.usuario');
     Route::get('/editar/{id}', [UserController::class, 'edit'])->name('form.editar.usuario');
     Route::put('/editar/{id}', [UserController::class, 'update'])->name('editar.usuario');
     Route::delete('deletar/{id}', [UserController::class, 'destroy'])->name('deletar.usuario');
@@ -70,6 +69,10 @@ Route::prefix('/ovos')->group(function () {
 
 Route::prefix('/consultas')->group(function () {
     Route::get('', [ConsultasController::class, 'mostrarConsultas'])->name('mostrar.consulta');
+});
+
+Route::prefix('/visoes')->group(function () {
+    Route::get('', [VisaoBDController::class, 'mostrarVisoes'])->name('mostrar.visao');
 });
 
 require __DIR__.'/auth.php';

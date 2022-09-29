@@ -12,7 +12,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form method="POST" action="{{route ('editar.ovo', $ovo->id)}}">
+                            <form method="POST" action="{{ route('editar.ovo', $ovo->id) }}">
                                 @method('PUT')
                                 @csrf
 
@@ -30,16 +30,16 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="idade_aves" class="col-form-label">
+                                    <label for="idade_das_aves" class="col-form-label">
                                         Idade das Aves:
                                     </label>
 
-                                    <input id="idade_aves" type="number" class="form-control
-                                           @error('idade_aves') is-invalid @enderror"
-                                           name="idade_aves" value="{{ old('idade_aves') ?? $historico->idade_das_aves}}"
+                                    <input id="idade_das_aves" type="number" class="form-control
+                                           @error('idade_das_aves') is-invalid @enderror"
+                                           name="idade_das_aves" value="{{ old('idade_das_aves') ?? $ovo->historico->idade_das_aves}}"
                                            required>
 
-                                    @error('idade_aves')
+                                    @error('idade_das_aves')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -51,8 +51,8 @@
                                     <div class="col-md-6">
                                         <select id="id_setor" class="form-select @error('id_setor') is-invalid @enderror" name="id_setor" id="id_setor" required>
                                             <option value="" selected>Selecione</option>
-                                            @foreach($setores as $setot)
-                                                <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
+                                            @foreach($setores as $setor)
+                                                <option @if($setor->id == $ovo->historico->setor->id) selected @endif value="{{ $setor->id }}">{{ $setor->numero }}</option>
                                             @endforeach
                                         </select>
 
@@ -78,7 +78,7 @@
 
                                     <input id="pesoAlbumen" type="number" class="form-control
                                            @error('pesoAlbumen') is-invalid @enderror"
-                                           name="pesoAlbumen" value="{{ old('pesoAlbumen') ?? $albumen->peso }}"
+                                           name="pesoAlbumen" value="{{ old('pesoAlbumen') ?? $ovo->albumen->peso }}"
                                            required>
 
                                     @error('pesoAlbumen')
@@ -95,7 +95,7 @@
 
                                     <input id="alturaAlbumen" type="number" class="form-control
                                            @error('alturaAlbumen') is-invalid @enderror"
-                                           name="alturaAlbumen" value="{{ old('alturaAlbumen') ?? $albumen->altura}}"
+                                           name="alturaAlbumen" value="{{ old('alturaAlbumen') ?? $ovo->albumen->altura}}"
                                            required>
 
                                     @error('alturaAlbumen')
@@ -112,7 +112,7 @@
 
                                     <input id="diametroAlbumen" type="number" class="form-control
                                            @error('diametroAlbumen') is-invalid @enderror"
-                                           name="diametroAlbumen" value="{{ old('diametroAlbumen') ?? $albumen->diametro}}"
+                                           name="diametroAlbumen" value="{{ old('diametroAlbumen') ?? $ovo->albumen->diametro}}"
                                            required>
 
                                     @error('diametroAlbumen')
@@ -129,7 +129,7 @@
 
                                     <input id="unidade_haugh" type="number" class="form-control
                                            @error('unidade_haugh') is-invalid @enderror"
-                                           name="unidade_haugh" value="{{ old('unidade_haugh') ?? $albumen->unidade_haugh}}"
+                                           name="unidade_haugh" value="{{ old('unidade_haugh') ?? $ovo->albumen->unidade_haugh}}"
                                            required>
 
                                     @error('unidade_haugh')
@@ -146,7 +146,7 @@
 
                                     <input id="phAlbumen" type="number" class="form-control
                                            @error('phAlbumen') is-invalid @enderror"
-                                           name="phAlbumen" value="{{ old('phAlbumen') ?? $albumen->ph }}"
+                                           name="phAlbumen" value="{{ old('phAlbumen') ?? $ovo->albumen->ph }}"
                                            required>
 
                                     @error('phAlbumen')
@@ -169,7 +169,7 @@
 
                                     <input id="pesoCasca" type="number" class="form-control
                                            @error('pesoCasca') is-invalid @enderror"
-                                           name="pesoCasca" value="{{ old('pesoCasca') ?? $casca->peso }}"
+                                           name="pesoCasca" value="{{ old('pesoCasca') ?? $ovo->casca->peso }}"
                                            required>
 
                                     @error('pesoCasca')
@@ -186,7 +186,7 @@
 
                                     <input id="corCasca" type="text" class="form-control
                                            @error('corCasca') is-invalid @enderror"
-                                           name="corCasca" value="{{ old('corCasca') ?? $casca->cor }}"
+                                           name="corCasca" value="{{ old('corCasca') ?? $ovo->casca->cor }}"
                                            required>
 
                                     @error('corCasca')
@@ -203,7 +203,7 @@
 
                                     <input id="espessura1" type="number" class="form-control
                                            @error('espessura1') is-invalid @enderror"
-                                           name="espessura1" value="{{ old('espessura1') ?? $casca->espessura1 }}"
+                                           name="espessura1" value="{{ old('espessura1') ?? $ovo->casca->espessura1 }}"
                                            required>
 
                                     @error('espessura1')
@@ -220,7 +220,7 @@
 
                                     <input id="espessura2" type="number" class="form-control
                                            @error('espessura2') is-invalid @enderror"
-                                           name="espessura2" value="{{ old('espessura2') ?? $casca->espessura2 }}"
+                                           name="espessura2" value="{{ old('espessura2') ?? $ovo->casca->espessura2 }}"
                                            required>
 
                                     @error('espessura2')
@@ -237,7 +237,7 @@
 
                                     <input id="espessura3" type="number" class="form-control
                                            @error('espessura3') is-invalid @enderror"
-                                           name="espessura3" value="{{ old('espessura3') ?? $casca->espessura3 }}"
+                                           name="espessura3" value="{{ old('espessura3') ?? $ovo->casca->espessura3 }}"
                                            required>
 
                                     @error('espessura3')
@@ -258,7 +258,7 @@
 
                                     <input id="pesoGema" type="number" class="form-control
                                            @error('pesoGema') is-invalid @enderror"
-                                           name="pesoGema" value="{{ old('pesoGema') ?? $gema->peso }}"
+                                           name="pesoGema" value="{{ old('pesoGema') ?? $ovo->gema->peso }}"
                                            required>
 
                                     @error('PesoGema')
@@ -275,7 +275,7 @@
 
                                     <input id="alturaGema" type="number" class="form-control
                                            @error('alturaGema') is-invalid @enderror"
-                                           name="alturaGema" value="{{ old('alturaGema') ?? $gema->altura }}"
+                                           name="alturaGema" value="{{ old('alturaGema') ?? $ovo->gema->altura }}"
                                            required>
 
                                     @error('alturaGema')
@@ -292,7 +292,7 @@
 
                                     <input id="diametroGema" type="number" class="form-control
                                            @error('diametroGema') is-invalid @enderror"
-                                           name="diametroGema" value="{{ old('diametroGema') ?? $gema->diametro }}"
+                                           name="diametroGema" value="{{ old('diametroGema') ?? $ovo->gema->diametro }}"
                                            required>
 
                                     @error('diametroGema')
@@ -309,7 +309,7 @@
 
                                     <input id="indiceGema" type="number" class="form-control
                                            @error('indiceGema') is-invalid @enderror"
-                                           name="indiceGema" value="{{ old('indiceGema') ?? $gema->indice }}"
+                                           name="indiceGema" value="{{ old('indiceGema') ?? $ovo->gema->indice }}"
                                            required>
 
                                     @error('indiceGema')
@@ -326,7 +326,7 @@
 
                                     <input id="phGema" type="number" class="form-control
                                            @error('phGema') is-invalid @enderror"
-                                           name="phGema" value="{{ old('phGema') ?? $gema->ph }}"
+                                           name="phGema" value="{{ old('phGema') ?? $ovo->gema->ph }}"
                                            required>
 
                                     @error('phGema')
@@ -343,7 +343,7 @@
 
                                     <input id="corGema" type="number" class="form-control
                                            @error('corGema') is-invalid @enderror"
-                                           name="corGema" value="{{ old('corGema') ?? $gema->cor }}"
+                                           name="corGema" value="{{ old('corGema') ?? $ovo->gema->cor }}"
                                            required>
 
                                     @error('corGema')

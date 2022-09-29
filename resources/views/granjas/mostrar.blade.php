@@ -39,6 +39,25 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <label for="cnpj" class="col-md-4 col-form-label text-md-end">Localizações</label>
+
+                                <div class="col-md-6">
+                                    @foreach ($granja->localizacao as $localizacao)
+                                    <input type="text" class="form-control" value="{{ $localizacao->endereco }}" disabled>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="cnpj" class="col-md-4 col-form-label text-md-end">Tipos de criação</label>
+
+                                <div class="col-md-6">
+                                    @foreach ($granja->tipoCriacao as $tipoCriacao)
+                                    <input type="text" class="form-control" value="{{ $tipoCriacao->tipo }}" disabled>
+                                    @endforeach
+                                </div>
+                            </div>
                         </form>
                 </div>
             </div>

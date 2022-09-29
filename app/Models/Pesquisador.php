@@ -19,14 +19,22 @@ class Pesquisador extends Model
     // Associacoes
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 
-    public function pesquisadorGranja(){
-        return $this->hasOne(PesquisadorGranja::class);
+    public function granjas(){
+        return $this->belongsToMany(Granja::class, 'pesquisador_granjas', 'id_pesquisador', 'id_granja');
     }
 
     public function formacoes(){
-        return $this->hasMany(Formacao::class);
+        return $this->hasMany(Formacao::class, 'id_pesquisador');
+    }
+
+    public function supervisor(){
+        return $this->belongsTo(Pesquisador::class, 'id_pesquisador_supervisor');
+    }
+
+    public function supervisados(){
+        return $this->hasMany(Pesquisador::class, 'id');
     }
 }

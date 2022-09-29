@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_setor');
             $table->timestamps();
 
-            $table->foreign('id_setor')->references('id')->on('setors');
+            $table->foreign('id_setor')->references('id')->on('setors')->onDelete('cascade');
         });
     }
 

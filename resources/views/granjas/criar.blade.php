@@ -18,9 +18,8 @@
                                 <label for="id_proprietario" class="col-md-4 col-form-label text-md-end">Proprietario</label>
                                 <div class="col-md-6">
                                     <select class="form-select @error('id_proprietario') is-invalid @enderror" name="id_proprietario" id="id_proprietario" required>
-                                        <option value="" selected>Selecione</option>
                                         @foreach($proprietarios as $proprietario)
-                                            <option value="{{ $proprietario->id }}">{{ \App\Models\User::where('id', $proprietario->id_usuario)->first()->nome }}</option>
+                                            <option value="{{ $proprietario->id }}">{{ $proprietario->user->nome }}</option>
                                         @endforeach
                                     </select>
 
@@ -60,7 +59,31 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <label for="localizacoes" class="col-md-4 col-form-label text-md-end">Localização (separar por ;)</label>
+                                <div class="col-md-6">
+                                    <input id="localizacoes" type="text" class="form-control @error('localizacoes') is-invalid @enderror" name="localizacoes" value="{{ old('localizacoes') }}" required autocomplete="localizacoes">
 
+                                    @error('localizacoes')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="tipo_criacao" class="col-md-4 col-form-label text-md-end">Tipo de criação (separar por ;)</label>
+                                <div class="col-md-6">
+                                    <input id="tipo_criacao" type="text" class="form-control @error('tipo_criacao') is-invalid @enderror" name="tipo_criacao" value="{{ old('tipo_criacao') }}" required autocomplete="tipo_criacao">
+
+                                    @error('tipo_criacao')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
