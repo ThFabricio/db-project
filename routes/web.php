@@ -5,6 +5,7 @@ use App\Http\Controllers\GranjaController;
 use App\Http\Controllers\OvoController;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisaoBDController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,6 +69,10 @@ Route::prefix('/ovos')->group(function () {
 
 Route::prefix('/consultas')->group(function () {
     Route::get('', [ConsultasController::class, 'mostrarConsultas'])->name('mostrar.consulta');
+});
+
+Route::prefix('/visoes')->group(function () {
+    Route::get('', [VisaoBDController::class, 'mostrarVisoes'])->name('mostrar.visao');
 });
 
 require __DIR__.'/auth.php';
