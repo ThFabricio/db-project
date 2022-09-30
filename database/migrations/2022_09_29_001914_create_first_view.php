@@ -28,27 +28,23 @@ return new class extends Migration
     private function createView(): string
     {
         return "
-            CREATE VIEW view_user_data AS
+            CREATE VIEW view_granja_data(nome_granja, qtd_setores, qtd_funcionarios) AS
                 SELECT 
-                    users.id, 
-                    users.name, 
-                    users.email,
-                    (SELECT count(*) FROM posts
-                                WHERE posts.user_id = users.id
-                            ) AS total_posts,
-                    (SELECT count(*) FROM comments
-                                WHERE comments.user_id = users.id
-                            ) AS total_comments
-                FROM users
-            SQL;
+                    g.nome, 
+                    COUNT(s.id), 
+                    COUNT(f.id)
+                FROM granjas as g LEFT OUTER JOIN setors as s
+                ON g.id = s.id_granja
+                LEFT OUTER JOIN funcionarios as f
+                ON g.id = f.id_granja
+                GROUP BY g.nome;
         ";
     }
 
     private function dropView(): string
     {
         return "
-            DROP VIEW IF EXISTS `view_user_data`;
-            SQL;
+            DROP VIEW IF EXISTS `view_granja_data`;
         ";
     }
 };

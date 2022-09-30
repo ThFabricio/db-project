@@ -73,6 +73,8 @@ Route::prefix('/consultas')->group(function () {
 
 Route::prefix('/visoes')->group(function () {
     Route::get('', [VisaoBDController::class, 'mostrarVisoes'])->name('mostrar.visao');
+    Route::get('/granja', [VisaoBDController::class, 'carregarVisaoGranja'])->name('granja.visao');
+    Route::get('/setor', [VisaoBDController::class, 'carregarVisaoSetor'])->name('setor.visao');
 });
 
 require __DIR__.'/auth.php';
