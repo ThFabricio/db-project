@@ -3,15 +3,13 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
         <th scope="col">Quantidade de Granjas</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <th scope="row">ID do proprietário</th>
-        <td>Nome do proprietário</td>
-        <td>Quantidade de granjas que ele é dono</td>
+        @foreach ($dados as $dado)
+            <td>{{ $dado->qtd_granja }}</td>
+        @endforeach
     </tr>
 </table>

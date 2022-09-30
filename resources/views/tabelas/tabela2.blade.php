@@ -3,15 +3,13 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">CPF</th>
+        <th scope="col">E-mail comercial do proprietário</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <th scope="row">ID do proprietário</th>
-        <td>E-mail comercial do proprietário</td>
-        <td>CPF do funcionário</td>
+        @foreach ($dados as $dado)
+            <td>{{ $dado->email_comercial }}</td>
+        @endforeach
     </tr>
 </table>

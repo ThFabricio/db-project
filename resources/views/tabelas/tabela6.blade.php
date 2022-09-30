@@ -2,18 +2,16 @@
 
 <table class="table table-hover">
     <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">CPF</th>
-        <th scope="col">Supervisores</th>
-    </tr>
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+        </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">ID do pesquisador</th>
-        <td>Nome do pesquisador</td>
-        <td>CPF do pesquisador</td>
-        <td>Supervisor do pesquisador</td>
-    </tr>
+        @foreach ($dados as $dado)    
+            <tr>
+                <td>{{ $dado->nome }}</td>
+                <td>{{ $dado->cpf }}</td>
+            </tr>
+        @endforeach
 </table>

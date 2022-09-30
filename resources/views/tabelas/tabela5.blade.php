@@ -3,17 +3,17 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th scope="col">#</th>
         <th scope="col">CNPJ</th>
         <th scope="col">Quantidade de funcionários</th>
         <th scope="col">Média salarial</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">ID da granja</th>
-        <td>CNPJ da Granja</td>
-        <td>Quantidade de funcionários</td>
-        <td>Média salarial</td>
-    </tr>
+        @foreach ($dados as $dado)
+            <tr>
+                <td>{{ $dado->cnpj }}</td>
+                <td>{{ $dado->qtd_func }}</td>
+                <td>{{ $dado->media_salario }}</td>
+            </tr>
+        @endforeach
 </table>

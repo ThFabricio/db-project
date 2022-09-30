@@ -69,6 +69,7 @@ Route::prefix('/ovos')->group(function () {
 
 Route::prefix('/consultas')->group(function () {
     Route::get('', [ConsultasController::class, 'mostrarConsultas'])->name('mostrar.consulta');
+    Route::get('/realizar', [ConsultasController::class, 'realizarConsultas'])->name('realizar.consulta');
 });
 
 Route::prefix('/visoes')->group(function () {
