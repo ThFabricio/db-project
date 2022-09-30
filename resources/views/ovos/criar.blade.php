@@ -183,7 +183,7 @@
                                         Cor da Casca:
                                     </label>
 
-                                    <input id="corCasca" type="text" class="form-control
+                                    <input id="corCasca" type="number" class="form-control
                                            @error('corCasca') is-invalid @enderror"
                                            name="corCasca" value="{{ old('corCasca') }}"
                                            required>
