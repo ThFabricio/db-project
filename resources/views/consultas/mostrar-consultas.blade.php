@@ -5,7 +5,7 @@
     <div id="consultas">
         <div class="container">
             <div class="col-md-12 mb-4" style="border-bottom: 2px solid #B0B0B0">
-                <div style="font-weight: 800; color: #081729; font-size: 3rem">Consultas</div>
+                <div style="font-weight: 800; color: #081729; font-size: 2.5rem">Consultas</div>
             </div>
 
             <div class="col-md-12" style="background-color: #C2C2C2; border-radius: 1rem">

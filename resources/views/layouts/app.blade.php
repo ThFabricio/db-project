@@ -44,7 +44,7 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('opcoes.setor') }}">Setor</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('opcoes.ovo') }}">Ovos</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('mostrar.consulta') }}">Consultas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('mostrar.visao') }}">Visões do Banco de Dados</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('mostrar.visao') }}">Visões</a></li>
                     </ul>
                 </div>
             </div>
