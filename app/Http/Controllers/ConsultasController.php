@@ -126,7 +126,7 @@ class ConsultasController extends Controller
         $results = DB::select(
             DB::raw("
                 SELECT usuario.cpf, usuario.nome 
-                FROM Pesquisadors pesquisador, Users usuario 
+                FROM pesquisadors pesquisador, users usuario 
                 WHERE pesquisador.id_pesquisador_supervisor IS null AND pesquisador.id_usuario = usuario.id;
             ")
         );
@@ -138,7 +138,29 @@ class ConsultasController extends Controller
     {
         $results = DB::select(
             DB::raw("
-                
+                SELECT COUNT(*) AS qtd
+                FROM ovos
+                WHERE peso > '$input1' AND id_historico IN ( 
+                    SELECT id 
+                    FROM historicos 
+                    WHERE id_setor IN ( 
+                        SELECT id_granja 
+                        FROM setors 
+                        WHERE id_granja IN ( 
+                            SELECT id_granja 
+                            FROM pesquisador_granjas 
+                            WHERE id_pesquisador IN ( 
+                                SELECT id 
+                                FROM pesquisadors
+                                WHERE id_usuario IN (
+                                    SELECT id
+                                    FROM users
+                                    WHERE (nome = '$input2')
+                                )
+                            )
+                        )
+                    )
+                );            
             ")
         );
 
